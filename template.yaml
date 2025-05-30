@@ -1,4 +1,15 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Description: Basic S3 Bucket Template for CI/CD + Conformity Scanner
+
 Resources:
-  MyBucket:
+  SampleS3Bucket:
     Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'conformity-scanner-bucket-${AWS::AccountId}-${AWS::Region}'
+      VersioningConfiguration:
+        Status: Enabled
+
+Outputs:
+  BucketName:
+    Description: Name of the created S3 bucket
+    Value: !Ref SampleS3Bucket
