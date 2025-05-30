@@ -1,11 +1,20 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      python: 3.8
   build:
     commands:
-      - echo "Validating CloudFormation template..."
+      - echo "Validating CloudFormation template"
       - aws cloudformation validate-template --template-body file://template.yaml
-
+      - echo "Uploading to Cloud One – Conformity Template Scanner"
+      - |
+        curl -X POST \
+          -H "Authorization: ApiKey tmc12xpd4fFaXvGYvRLQA8rMfl2pPoJ:5jdDcRJFFwvrMDqovFMVt7YY5DEzXTJJYpomC6XAHnzGbYo68VT8hF4GTTJ1SMxaq3" \
+          -H "Content-Type: application/json" \
+          --data-binary @template.yaml \
+          https://conformity.trendmicro.com/api/scanner/template
 artifacts:
   files:
     - template.yaml

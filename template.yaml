@@ -1,20 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Basic S3 Bucket Template for CI/CD + Conformity Scanner
+Description: S3 Bucket with encryption for Conformity scanning
 
 Resources:
-  SampleS3Bucket:
+  EncryptedS3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub 'conformity-scanner-bucket-${AWS::AccountId}-${AWS::Region}'
+      BucketName: !Sub room8cicd-secure-bucket-${AWS::AccountId}-${AWS::Region}
       VersioningConfiguration:
         Status: Enabled
-
-Outputs:
-  BucketName:
-    Description: Name of the created S3 bucket
-    Value: !Ref SampleS3Bucket
-
-BucketEncryption:
+      BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
